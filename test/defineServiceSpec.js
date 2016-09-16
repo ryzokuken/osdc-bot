@@ -1,13 +1,13 @@
 'use strict';
 const chai = require('chai');
 const expect = chai.expect;
-// const spies = require('chai-spies');
+const spies = require('chai-spies');
 const request = require('request');
 const constants = require('../constants');
-// const defineService = require('../services/defineService');
+const defineService = require('../services/defineService');
 
 describe('Module defineService', () => {
-  // chai.use(spies);
+  chai.use(spies);
 
   it('should fetch definitions correctly from the api', () => {
     request({
@@ -23,14 +23,14 @@ describe('Module defineService', () => {
     });
   });
 
-  // it('should check for the callback', (done) => {
-  //   const USERNAME = 'username';
-  //   const callback = (joke, username) => {
-  //     expect(username).to.equal(USERNAME);
-  //     expect(joke).to.be.a('string');
-  //     done();
-  //   };
-  //   const spy = chai.spy(callback);
-  //   jokeService.getJoke(spy, USERNAME);
-  // });
+  it('should check for the callback', (done) => {
+    const USERNAME = 'username';
+    const callback = (definition, username) => {
+      expect(username).to.equal(USERNAME);
+      expect(definition).to.be.a('string');
+      done();
+    };
+    const spy = chai.spy(callback);
+    defineService.define(spy, USERNAME);
+  });
 });
